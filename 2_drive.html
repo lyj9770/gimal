@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="2_style_drive.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+      
+        /* 화면 전환 효과 */
+        .screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* 이미지 컨테이너 스타일 */
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        /* 이미지 스타일 */
+        .image {
+            position: absolute;
+            opacity: 0.8;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .image1 {
+            z-index: 2;
+            transform: scale(1.03);
+        }
+
+        .image2 {
+            z-index: 1;
+            transform: translateX(0) rotate(0deg);
+        }
+
+        .container:hover .image1 {
+            transform: translateX(-75px) scale(1.03);
+        }
+
+        /* 이미지2에 호버 시 이동 후 무한 회전 */
+        .container:hover .image2 {
+            opacity: 1;
+            animation: moveThenRotate 0.85s ease forwards, rotateInfinite 5.5s linear infinite 0.7s;
+        }
+
+        /* 이동 애니메이션 */
+        @keyframes moveThenRotate {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateX(90px) rotate(0deg);
+            }
+        }
+
+        /* 무한 회전 애니메이션 */
+        @keyframes rotateInfinite {
+            0% {
+                transform: translateX(90px) rotate(0deg);
+            }
+            100% {
+                transform: translateX(90px) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+     <!-- 오디오 요소 -->
+     <audio id="audio" src="drive.mp3" preload="auto"></audio>
+
+    <!-- 첫 번째 화면 -->
+    <div class="screen" id="screen1">
+        <div class="container">
+            <img class="image image1" src="커버.svg" alt="First Image">
+            <img class="image image2" src="drive_img/drive_cd.png" alt="Second Image" onclick="switchScreen()">
+        </div>
+    </div>
+
+    <!-- 두 번째 화면 -->
+    <div class="screen hidden" id="screen2">
+        <!-- 슬라이드 이미지 컨테이너 -->
+        <div class="image3-container">
+            <img class="image3" src="drive_img/star1.svg" alt="Changing Background">
+        </div>
+
+        <!-- 가사 텍스트 컨테이너 -->
+        <div class="text-container">
+            <div class="text">
+                <p class="line">Um 무슨 향수를 쓰는 건지</p>
+                <p class="line">숨을 내 뱉고 싶지 않아</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">그래서 그런 건지</p>
+                <p class="line">얼굴이 빨개진 듯 해 ohh</p>
+
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">Yeah I’mma take a deep breath love to inhale</p>
+                <p class="line">밖으로 뱉진 못해 Never exhale</p>
+                <p class="line">들이 마셔 너의 입을 Something like we kissing</p>
+                <p class="line">몰아칠래 쓰나미 같이</p>
+                <p class="line">매일매일 너를 담을래 Lady</p>
+                <p class="line">매일매일 너로 채울래 Lady</p>
+
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">그리곤 숨 쉴 수 없게</p>
+                <p class="line">내 입을 꽉 막을래 (쉿)</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">처음이야 이런 기분은</p>
+                <p class="line">깨고 싶지 않아 이 설렘을</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">Ah slowly baby</p>
+                <p class="line">Ah slinky baby</p>
+                <p class="line">Ah talk to me Ah</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">We driven` through the night</p>
+                <p class="line">I know you want me baby</p>
+                <p class="line">오늘밤 더 더 더 크게</p>
+                <p class="line">쉼 없이 연주해</p>
+                <p class="line">We driven` through the night</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">여긴 너와 나만 있잖아</p>
+                <p class="line">내 귀에 대고 말해줘 Love ya</p>
+                <p class="line">넌 아무런 걱정하지마</p>
+                <p class="line">아무도 여긴 못 찾으니까</p>
+                <p class="line">We can talk a lot baby</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">오늘 밤은 내 팔 배고 자</p>
+                <p class="line">귀신 꿈을 꾸었다고</p>
+                <p class="line">자다 깨서 날 안아줘</p>
+                <p class="line">아침엔 내가 먼저 깰 테니</p>
+                <p class="line">넌 좋은 꿈 꿔</p>
+                <p class="line">Baby have a good night</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">처음이야 이런 기분은</p>
+                <p class="line">깨고 싶지 않아 이 설렘을</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">Ah slowly baby</p>
+                <p class="line">Ah slinky baby</p>
+                <p class="line">Ah talk to me Ah</p>
+                <p class="line">We driven` through the night</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">I know you want me baby</p>
+                <p class="line">오늘밤 더 더 더 크게</p>
+                <p class="line">쉼 없이 연주해</p>
+                <p class="line">We driven` through the night</p>
+                
+                <p class="line">&nbsp;</p> <!-- 빈 줄 -->
+                <p class="line">We driven` through the night</p>
+                <p class="line">I know you want me baby</p>
+                <p class="line">오늘밤 더 더 더 크게</p>
+                <p class="line">쉼 없이 연주해</p>
+                <p class="line">We driven` through the night</p>
+            </div>
+        </div>
+
+        <!-- 리셋 버튼 -->
+        <div id="imageContainer">
+            <img id="resetButton" src="drive_img/drive_cd.png" alt="Reset Button">
+        </div>
+    </div>
+
+    <script src="2_script_drive.js"></script>
+</body>
+</html>
