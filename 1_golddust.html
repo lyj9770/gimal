@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="1_goldduststyle.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover and Click Screen Switch</title>
+    <style>
+        /* 기본 스타일 */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #212121;
+        }
+
+        /* 화면 스타일 */
+        .screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #212121;
+            color: #fff;
+            font-size: 24px;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 화면 전환 효과 */
+        .screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* 이미지 컨테이너 스타일 */
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        /* 이미지 스타일 */
+        .image {
+            position: absolute;
+            opacity: 0.8;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .image1 {
+            z-index: 2;
+            transform: scale(1.03);
+        }
+
+        /* 이미지2 기본 스타일 */
+        .image2 {
+            z-index: 1;
+            transition: transform 2s ease;
+            transform: translateX(0)  rotate(0deg);
+        }
+
+        /* 이미지2에 호버 시 이동 후 무한 회전 */
+        .container:hover .image2 {
+            opacity: 1;
+            animation: moveThenRotate 0.85s ease forwards, rotateInfinite 5.5s linear infinite 0.7s;
+        }
+
+        /* 이동 애니메이션 */
+        @keyframes moveThenRotate {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateX(90px) rotate(0deg);
+            }
+        }
+
+        /* 무한 회전 애니메이션 */
+        @keyframes rotateInfinite {
+            0% {
+                transform: translateX(90px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateX(90px) rotate(360deg);
+            }
+        }
+
+        /* 첫 번째 이미지에 호버 시 효과 */
+        .container:hover .image1 {
+            transform: translateX(-75px) scale(1.03);
+        }
+
+        /* 두 번째 이미지에 호버 시 효과 */
+        .container:hover .image2 {
+            opacity: 1;
+            transform: translateX(90px)  rotate(0deg);
+        }
+
+        /* 두 번째 화면의 이미지3 스타일 */
+        .image3-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .image3 {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            object-position: top;
+        }
+
+          /* 이미지와 버튼을 감싸는 컨테이너 스타일 */
+  #imageContainer {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* 이미지 스타일 */
+  #image4 {
+    display: block;
+    width: 100%;
+  }
+  .container:hover .image4 {
+            opacity: 1;
+            
+        }
+  /* 이미지 버튼 스타일 */
+  #resetButton {
+    position: absolute;
+    top: -47.5vh;  /* 화면 높이에 대해 10% 위치 */
+    right: 105px; /* 화면 너비에 대해 위치 */
+    width: 6.5vw; /* 화면 너비에 대해 5% 크기 */
+    height: auto; /* 비율을 유지하면서 크기 조정 */
+    cursor: pointer;
+    z-index: 10;
+    animation: rotateButton 3s linear infinite; /* 회전 애니메이션 추가 */
+  }
+  /* 버튼 회전 애니메이션 */
+@keyframes rotateButton {
+    0% {
+        transform: translateX(90px) rotate(0deg);
+    }
+    100% {
+        transform: translateX(90px) rotate(360deg);
+    }
+}
+       
+    </style>
+</head>
+
+<body>
+    <!-- 오디오 요소 -->
+    <audio id="audio" src="golddust.mp3" preload="auto"></audio>
+
+    <!-- 첫 번째 화면 -->
+    <div class="screen" id="screen1">
+        <div class="container">
+            <img class="image image1" src="커버.svg" alt="First Image">
+            <!-- image2를 클릭 시 화면 전환 -->
+            <img class="image image2" src="CD짱.svg" alt="Second Image" onclick="switchScreen()">
+        </div>
+    </div>
+
+    <!-- 두 번째 화면 -->
+    <div class="screen hidden" id="screen2">
+        <div class="image3-container">
+            <div class="text">
+                <p class="p1" id="text1">잘자내달빛이리와서안겨깊숙이밤이수놓인잔물결로누워아마너는모르지얼마나네빛예쁜지금세잔뜩닿아반짝이잖</p>
+                <p class="p2" id="text2">니금색길을내어나를빛내지널 만나기전엔그저어두웠지칠흑같은바다밑을본적있니?일렁이는굴표정없는매일괜히</p>
+                <p class="p3" id="text3">흘러갈뿐기대없던내일그런어느날 내위로쏟아지던은하수안녕하고선빤히날바라보는눈망울(oh, ooh)그제야눈치</p>
+                <p class="p4" id="text4">챘어손에물든빛별이뜬게아냐,이건너야짙은밤내게와서너를새기던길금빛이된 바다달이떴네시간이멈춘것같았던</p>
+                <p class="p5" id="text5">그즈음(oh-ohoh)단번에널떠올리곤(oh-oh-oh,ah,ah)이게사랑일까해?(이게사랑일까해?)잘자내달빛이리와서안</p>
+                <p class="p6" id="text6">겨깊숙이밤이수놓인잔물결위로누워아마너는모르지얼마나 네빛이예쁜지그므세잔뜩닿아반짝이잖니금색길을내어</p>
+                <p class="p7" id="text7">나를빛내지물기어린내음고갤들게해어김없이생긋웃어주는,너,나나왜일까네게서바다향이?어젯밤나에게묻은건</p>
+                <p class="p8" id="text8">지코끝을맴네,giveittome,giveittomeOoh,오늘도다시올까?소란한그빛벌써스러져가아득한데감은눈뜨면순간너</p>
+                <p class="p9" id="text9">와하늘이길금빛길을따라네게갈게(yeah)잘자내달빛이리와서안겨깊숙이(찬란한밤)밤이수놓인잔물결위로누워</p>
+                <p class="p10" id="text10">(잔물결위로누워)아마너는모르지얼마나네빛이예쁜지그므세잔뜩닿아반짝이잖니(ooh)금색길을내어나를빛내지무</p>
+
+                <p id="text11" class="p11">한하게반짝여넌,like magic그환함에전부다잊어,badthings그런너를좋아해,이미알지꿈에서도아른거리는달빛</p>
+                <p id="text12" class="p12">Oh-ah,oh-ah어디한번물어봐파도위에손대봐고요하던물결이요동치는것을봐오직널향해흘러,그중력의힘에내바</p>
+                <p id="text13" class="p13">다가다말라도잘자내달빛이리와서안겨깊숙이(oh-oh)밤이수놓인잔물결위로누워(잔물결위로누워,whoa)아마이</p>
+                <p id="text14" class="p14">제알겠지(이제알겠지)얼마나네빛이예쁜지(oh-oh)금세잔뜩닿아반짝이잖니(ah,ah)금색길을내어나를빛내지</p>
+                <p id="text15" class="p15">(ooh,whoa)Golddustup mysea금색가룰뿌려찬란히밤이수놓인잔물결위에 뿌려아마이제알겠지얼마나네빛이예</p>
+                <p id="text16" class="p16">쁜지금세잔뜩닿아반짝이잖니금색길을내어나를빛내지잘자내달빛이리와서안겨깊숙이밤이수놓인잔물결위로누워</p>
+                <p id="text17" class="p17">아마너는모르지얼마나네빛이예쁜지금세잔뜩닿아반짝이잖니금색길을내어나를빛내지널만나기전엔그저어두웠지</p>
+                <p id="text18" class="p18">칠흑같은바다밑을본적있니?일렁이는얼굴표정없는매일괜히흘러갈뿐기대없던내일그런어느날내위로쏟아지던은</p>
+                <p id="text19" class="p19">하수안녕하고선빤히날바라보는눈망울(oh,ooh)그제야눈치챘어손에물든빛별이뜬게아냐,이건너야짙은밤내게와</p>
+                <p id="text20" class="p20">서너를새기던길금빛이된바다달이떴네시간이멈춘것같았던그즈음(oh-oh-oh)단번에널떠올리곤oh-oh-oh,ah,</p>
+
+                <p id="text21" class="p21">ah이게사랑일까해?(이게사랑일까해?)잘자내달빛이리와서안겨깊숙이밤이수놓인잔물결위로누워아마너는모르</p>
+                <p id="text22" class="p22">지얼마나네빛이예쁜지금세 잔뜩닿아반짝이잖니금색길을내어나를빛내지물기어린내음고갤들게해어김없이생긋웃</p>
+                <p id="text23" class="p23">어주는,너,나나왜일까네게서바다향이?어젯밤나에게묻은건지코끝네,giveittome,giveittomeOoh,오늘도다시올</p>
+                <p id="text24" class="p24">까?소란한그빛벌써스러져가아득한데감은눈뜨면순간너와하늘이길금빛길을따라네게갈게(yeah)잘자내달빛이리</p>
+                <p id="text25" class="p25">와서안겨깊숙이(찬란한밤)밤이수놓인잔물결위로누워(잔물결위로누워)아마너는모르지얼마나네빛이예쁜지금세</p>
+                <p id="text26" class="p26">잔뜩닿아반짝이잖니(ooh)금색길을내어나를빛내지무한하게반짝여넌,likemagic그환함에전부 다잊어,badthings</p>
+                <p id="text27" class="p27">그런너를좋아해,이미알지꿈에서도아른거리는달빛Oh-ah,oh-ah어디한번물어봐파도위에손대봐고요하던물결이</p>
+                <p id="text28" class="p28">요동치는것을봐오직널향해흘러,그중력의힘에내바다가다말라도잘자내달빛이리와서안겨깊숙이(oh-oh)밤이수놓</p>
+                <p id="text29" class="p29">인잔물결위로누워(잔물결위로누워,whoa)아마이제알겠지(이제알겠지)얼마나네빛이예쁜지(oh-oh)금세잔뜩닿아</p>
+                <p id="text30" class="p30">반짝이잖니(ah,ah)금색길을내어나를빛내지(ooh,whoa)Golddustupmysea금색가룰뿌려찬란히밤이수놓인잔물</p>
+
+                <p id="text31" class="p31">결위에뿌려아마이제알겠지얼마나네빛이예쁜지금세잔뜩닿아반짝이잖니금색길을내어나를빛내지잘자내달빛이</p>
+                <p id="text32" class="p32">리와서안겨깊숙이밤이수놓인잔물결로누워아마너는모르지얼마나네빛예쁜지금세잔뜩닿아반짝이잖니금색길을내</p>
+                <p id="text33" class="p33">어나를빛내지널 만나기전엔그저어두웠지칠흑같은바다밑을본적있니?일렁이는굴표정없는매일괜히흘러갈뿐기대</p>
+                <p id="text34" class="p34">없던내일그런어느날내위로쏟아지던은하수안녕하고선빤히날바라보는눈망울(oh,ooh)그제야눈치챘어손에물든빛</p>
+                <p id="text35" class="p35">별이뜬게아냐,이건너야짙은밤내게와서너를새기던길금빛이된 바다달이떴네시간이 멈춘것같았던그즈음(ohohoh)</p>
+                <p id="text36" class="p36">단번에널떠올리곤(oh-oh-oh,ah,ah)이게사랑일까해?(이게사랑일까해?)잘자내달빛이리와서안겨깊숙이밤</p>
+
+                </p>
+            </div>
+            <img class="image3" src="b.svg" alt="Third Image">
+        </div>
+
+        <div id="imageContainer">
+            <img id="resetButton" src="bt.svg" alt="Reset Button" />
+        </div>
+
+    </div>
+
+    <script>
+
+document.getElementById("resetButton").addEventListener("click", function() {
+    window.location.href = "index.html"; 
+});
+
+
+const textElements = [
+    { element: document.getElementById('text1'), originalText: '잘자내달빛이리와서안겨깊숙이밤이수놓인잔물결로누워아마너는모르지얼마나네빛예쁜지금세잔뜩닿아반짝이잖', changedText: '@@@@@ㅤ@@ㅤ@@ㅤㅤㅤㅤ@@@ㅤㅤ@@@@ㅤㅤ@@@@@@@@@@@@@@@@@@@@@@ㅤㅤㅤㅤㅤㅤ@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text2'), originalText: '니금색길을내어나를빛내지널 만나기전엔그저어두웠지칠흑같은바다밑을본적있니?일렁이는굴표정없는매일괜히', changedText: '@@@@@ㅤㅤㅤ@@ㅤ@@ㅤㅤㅤ@@@ㅤㅤㅤ@@@ㅤㅤㅤㅤㅤ@@ㅤㅤ@@@@@@@@@@@@@@@@@@@21' },
+    { element: document.getElementById('text3'), originalText: '흘러갈뿐기대없던내일그런어느날 내위로쏟아지던은하수안녕하고선빤히날바라보는눈망울(oh, ooh)그제야눈치', changedText: '@@@@@@@ㅤㅤㅤ@@@ㅤㅤ@@ㅤㅤ@@@@ㅤㅤㅤㅤ@@@@@@@ㅤㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text4'), originalText: '챘어손에물든빛별이뜬게아냐,이건너야짙은밤내게와서너를새기던길금빛이된 바다달이떴네시간이멈춘것같았던', changedText: '@@@@@@ㅤㅤ@@ㅤ@@ㅤㅤㅤㅤㅤㅤ@@ㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text5'), originalText: '그즈음(oh-ohoh)단번에널떠올리곤(oh-oh-oh,ah,ah)이게사랑일까해?(이게사랑일까해?)잘자내달빛이리와서안', changedText: '@@@@@ㅤㅤㅤㅤㅤㅤ@@@@ㅤㅤㅤ@@@@@@@@@ㅤㅤㅤㅤ@@@/' },
+    { element: document.getElementById('text6'), originalText: '겨깊숙이밤이수놓인잔물결위로누워아마너는모르지얼마나 네빛이예쁜지그므세잔뜩닿아반짝이잖니금색길을내어', changedText: '@@@@@@@@@@@@@@@@@@@@@@@ㅤㅤㅤ@ㅤㅤㅤ@@@@@@@@@@@@@@@/@@@@@@@@@@@@@@@@@@@@@@@@@4' },
+    { element: document.getElementById('text7'), originalText: '나를빛내지물기어린내음고갤들게해어김없이생긋웃어주는,너,나나왜일까네게서바다향이?어젯밤나에게묻은건', changedText: '@@@@@@@@ㅤ@@@@ㅤㅤ@@ㅤㅤㅤㅤ@@ㅤㅤㅤ@@@@@@@ㅤㅤㅤ@ㅤ@@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text8'), originalText: '지코끝을맴네,giveittome,giveittomeOoh,오늘도다시올까?소란한그빛벌써스러져가아득한데감은눈뜨면순간너', changedText: '@@@@@@@@@@@@ㅤㅤ@@ㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text9'), originalText: '와하늘이길금빛길을따라네게갈게(yeah)잘자내달빛이리와서안겨깊숙이(찬란한밤)밤이수놓인잔물결위로누워', changedText: '@@@@@@@@@@@@@@@@@ㅤ@@@@@@@@@@@ㅤ@ㅤ@@@@/ㅤㅤㅤㅤㅤㅤ@@ㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text10'), originalText: '(잔물결위로누워)아마너는모르지얼마나네빛이예쁜지그므세잔뜩닿아반짝이잖니(ooh)금색길을내어나를빛내지무', changedText: '@@@@@@@@@@@ㅤ@@ㅤㅤ@@ㅤㅤㅤ@@@@@@@@ㅤ@@@@@@@@@@@@@@ㅤㅤㅤㅤㅤㅤ@@@@///@@@@@@@@@@@@@@@@@@@@@@@@' },
+
+    { element: document.getElementById('text11'), originalText: '한하게반짝여넌,like magic그환함에전부다잊어,badthings그런너를좋아해,이미알지꿈에서도아른거리는달빛', changedText: '@@@@@@ㅤㅤ@@ㅤ@@ㅤㅤㅤㅤㅤㅤ@@ㅤ@@@@@@@@ㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text12'), originalText: 'Oh-ah,oh-ah어디한번물어봐파도위에손대봐고요하던물결이요동치는것을봐오직널향해흘러,그중력의힘에내바', changedText: '@@@@@@@@@@@@@@@@ㅤ@@ㅤㅤ@@ㅤㅤㅤ@@@ㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text13'), originalText: '다가다말라도잘자내달빛이리와서안겨깊숙이(oh-oh)밤이수놓인잔물결위로누워(잔물결위로누워,whoa)아마이', changedText: '@@@@@@@ㅤ@@ㅤㅤㅤ@@@@@@ㅤㅤㅤ@@@@@ㅤㅤ@@@@ㅤㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@@@@' },
+    { element: document.getElementById('text14'), originalText: '제알겠지(이제알겠지)얼마나네빛이예쁜지(oh-oh)금세잔뜩닿아반짝이잖니(ah,ah)금색길을내어나를빛내지', changedText: '@@@@@@@@@@@@ㅤ@@@@@@@ㅤㅤ@@@@ㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text15'), originalText: '(ooh,whoa)Golddustup mysea금색가룰뿌려찬란히밤이수놓인잔물결위에 뿌려아마이제알겠지얼마나네빛이예', changedText: '@@@@@@@@@@@@@@@@@@@@ㅤ@@@@ㅤㅤㅤ@@@/ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ@@@@// @@@@@@@@@@@@@@@@@@@' },
+    { element: document.getElementById('text16'), originalText: '예시텍스쁜지금세잔뜩닿아반짝이잖니금색길을내어나를빛내지잘자내달빛이리와서안겨깊숙이밤이수놓인잔물결위로누워트16', changedText: '@@@@@ㅤ@@ㅤㅤㅤㅤ@@ㅤㅤㅤ@@@@ㅤㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@ @@@@@16' },
+    { element: document.getElementById('text17'), originalText: '아마너는모르지얼마나네빛이예쁜지금세잔뜩닿아반짝이잖니금색길을내어나를빛내지널만나기전엔그저어두웠지', changedText: '@@@@@@@@@@@@@@@@@ㅤ@@@ㅤㅤㅤ@@@@ㅤ@@@@@@ㅤ@@@ㅤ@ㅤ@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@18' },
+    { element: document.getElementById('text18'), originalText: '칠흑같은바다밑을본적있니?일렁이는얼굴표정없는매일괜히흘러갈뿐기대없던내일그런어느날내위로쏟아지던은', changedText: '@@@@@@@@@@@@@@@@@ㅤ@@@ㅤㅤㅤㅍ@@ㅤ@@ㅤㅤㅤ@@@@@@@ㅤ@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@18' },
+    { element: document.getElementById('text19'), originalText: '하수안녕하고선빤히날바라보는눈망울(oh,ooh)그제야눈치챘어손에물든빛별이뜬게아냐,이건너야짙은밤내게와', changedText: '@@@@@@@@ㅤㅤㅤ@@@@ㅤ@@@ㅤㅤㅤ@ㅤ@@/@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@19' },
+    { element: document.getElementById('text20'), originalText: '서너를새기던길금빛이된바다달이떴네시간이멈춘것같았던그즈음(oh-oh-oh)단번에널떠올리곤oh-oh-oh,ah,', changedText: '@@@@@@@@@ㅤㅤ@@ㅤ@ㅤㅤㅤㅤㅤㅤ@@ㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@20' },
+
+    { element: document.getElementById('text21'), originalText: 'ah이게사랑일까해?(이게사랑일까해?)잘자내달빛이리와서안겨깊숙이밤이수놓인잔물결위로누워아마너는모르', changedText: '@@@@@@@@@@@ㅤㅤ@@@@ㅤ@ㅤㅤ@@@ㅤㅤㅤㅤㅤㅤㅤㅤㅤ@@@ㅤㅤㅤ@@@@@@@@@21' },
+    { element: document.getElementById('text22'), originalText: '지얼마나네빛이예쁜지금세 잔뜩닿아반짝이잖니금색길을내어나를빛내지물기어린내음고갤들게해어김없이생긋웃', changedText: '@@@@@@@@@@@@ㅤ@@@@@@@@ㅤ@@@@/@@@@@ㅤㅤㅤㅤ@@@@ㅤㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@22' },
+    { element: document.getElementById('text23'), originalText: '어주는,너,나나왜일까네게서바다향이?어젯밤나에게묻은건지코끝네,giveittome,giveittomeOoh,오늘도다시올', changedText: '@@@@@@@@@@@ㅤ@@@@@ㅤ@@@@@@@@@@@@ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@@@23' },
+    { element: document.getElementById('text24'), originalText: '까?소란한그빛벌써스러져가아득한데감은눈뜨면순간너와하늘이길금빛길을따라네게갈게(yeah)잘자내달빛이리', changedText: '@@@@@@@@@ㅤ@@@ㅤㅤ@@@ㅤㅤ@@@@@@@@@ㅤㅤㅤ@@@@ㅤ@@@@@@@@@@@@@@@@@@@24' },
+    { element: document.getElementById('text25'), originalText: '예시텍와서안겨깊숙이(찬란한밤)밤이수놓인잔물결위로누워(잔물결위로누워)아마너는모르지얼마나네빛이예쁜지금세스트25', changedText: '@@@@@@@ㅤㅤ@@ㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@25' },
+    { element: document.getElementById('text26'), originalText: '잔뜩닿아반짝이잖니(ooh)금색길을내어나를빛내지무한하게반짝여넌,likemagic그환함에전부 다잊어,badthings', changedText: '@@@@@@@@@@@ㅤ@@@@@@ㅤㅤㅤ@@@@ㅍ@@@/@ㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@26' },
+    { element: document.getElementById('text27'), originalText: '그런너를좋아해,이미알지꿈에서도아른거리는달빛Oh-ah,oh-ah어디한번물어봐파도위에손대봐고요하던물결이', changedText: '@@@@@@@@@ㅤ@@@@ㅤㅤㅤ@@ㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@27' },
+    { element: document.getElementById('text28'), originalText: '요동치는것을봐오직널향해흘러,그중력의힘에내바다가다말라도잘자내달빛이리와서안겨깊숙이(oh-oh)밤이수놓', changedText: '@@@@@@@@@@@@@@@@@@ㅤㅤㅤ@@@ㅤㅤㅤ@@@@@@@@@@@@@@@@ㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@28' },
+    { element: document.getElementById('text29'), originalText: '인잔물결위로누워(잔물결위로누워,whoa)아마이제알겠지(이제알겠지)얼마나네빛이예쁜지(oh-oh)금세잔뜩닿아', changedText: '@@@@@@@@@@@@@@@@@@@@ㅤ@@@@@@@ㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@29' },
+    { element: document.getElementById('text30'), originalText: '반짝이잖니(ah,ah)금색길을내어나를빛내지(ooh,whoa)Golddustupmysea금색가룰뿌려찬란히밤이수놓인잔물', changedText: '@@@@@@@@@@@@@@@@@@@@ㅤㅤㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@30' },
+
+    { element: document.getElementById('text31'), originalText: '결위에뿌려아마이제알겠지얼마나네빛이예쁜지금세잔뜩닿아반짝이잖니금색길을내어나를빛내지잘자내달빛이', changedText: '@@@@@@@ㅤㅤ@@@@ㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@/@@@@@@@@@@@@@@@@@31' },
+    { element: document.getElementById('text32'), originalText: '리와서안겨깊숙이밤이수놓인잔물결로누워아마너는모르지얼마나네빛예쁜지금세잔뜩닿아반짝이잖니금색길을내', changedText: '@@@@@@@@@@@@@@@@@@ㅤㅤ@@/@ㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@@@32' },
+    { element: document.getElementById('text33'), originalText: '어나를빛내지널 만나기전엔그저어두웠지칠흑같은바다밑을본적있니?일렁이는굴표정없는매일괜히흘러갈뿐기대', changedText: '@@@@@@@@ㅤ@@@@@ㅤㅤㅤㅤ@@@ㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@33' },
+    { element: document.getElementById('text34'), originalText: '없던내일그런어느날내위로쏟아지던은하수안녕하고선빤히날바라보는눈망울(oh,ooh)그제야눈치챘어손에물든빛', changedText: '@@@@@@@@@@ㅤㅤㅤㅤ@ㅤ@@@@ㅤ@@@@@ㅤ@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@34' },
+    { element: document.getElementById('text35'), originalText: '별이뜬게아냐,이건너야짙은밤내게와서너를새기던길금빛이된 바다달이떴네시간이 멈춘것같았던그즈음(ohohoh)', changedText: '@@@@@@@@@@@@@@ㅤㅤㅤ@@ㅤㅤㅤㅤㅤㅤㅤ@@@@@@@@@@/@@@@@@@@@@@@@@@@@@@@@@@@@@35' },
+    { element: document.getElementById('text36'), originalText: '단번에널떠올리곤(oh-oh-oh,ah,ah)이게사랑일까해?(이게사랑일까해?)잘자내달빛이리와서안겨깊숙이밤', changedText: '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@36' },
+];
+
+
+function setupTextChange(textElement, originalText, changedText) {
+    textElement.addEventListener('mouseover', function() {
+        textElement.textContent = changedText; // 텍스트 변경
+        textElement.style.opacity = 1; // 바로 나타나게 설정
+    });
+
+    textElement.addEventListener('mouseout', function() {
+        textElement.style.opacity = 0; // 텍스트 서서히 사라짐 (5초 동안)
+        setTimeout(function() {
+            textElement.textContent = originalText; // 원래 텍스트로 복원
+            textElement.style.transition = "opacity 1.5s ease"; // opacity가 5초 동안 변하도록 설정
+            textElement.style.opacity = 1; // 텍스트 서서히 나타남 (5초 동안)
+        }, 800); // 텍스트 복원은 opacity가 0인 상태에서 5초 후에 진행
+    });
+}
+
+// Apply the setup to all text elements
+textElements.forEach(item => setupTextChange(item.element, item.originalText, item.changedText));
+
+
+    
+        window.addEventListener('scroll', function () {
+            const image3 = document.querySelector('.image3');
+            const image3Bottom = image3.offsetTop + image3.offsetHeight; // 이미지3의 끝 위치 계산
+            const scrollPosition = window.scrollY; // 현재 스크롤 위치
+            const windowHeight = window.innerHeight; // 뷰포트의 높이
+    
+            // 이미지3의 끝에 도달했을 때, 그 이후로 스크롤이 더 이상 내려가지 않게 설정
+            if (scrollPosition + windowHeight >= image3Bottom) {
+                window.scrollTo(0, image3Bottom - windowHeight); // 이미지3 끝에서 스크롤을 멈춤
+            }
+            
+           
+
+        });
+    
+        // 화면 전환 함수 (중복된 함수 제거 후 하나로 합침)
+        function switchScreen() {
+            document.getElementById('screen1').classList.add('hidden'); // 첫 번째 화면 숨김
+            document.getElementById('screen2').classList.remove('hidden'); // 두 번째 화면 표시
+            const audio = document.getElementById('audio');
+            audio.play();  // 두 번째 화면이 나오면 오디오를 재생
+        }
+    </script>
+    
+</body>
+
+</html>
